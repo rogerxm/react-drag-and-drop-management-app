@@ -26,7 +26,7 @@ export const DraggableUserCard = ({
       ref={setNodeRef}
     >
       <img
-        className="w-12 h-12 md:w-20 md:h-10 rounded-full"
+        className="w-12 h-12 md:w-20 md:h-20 rounded-full"
         src={profileImage}
         alt={fullName}
         {...listeners}

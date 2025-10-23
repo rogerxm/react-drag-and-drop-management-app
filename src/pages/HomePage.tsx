@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { fetchUsers } from "../api/userApi";
 import { setInitialUsers, setLoading } from "../store/userSlice";
 import { UserList } from "../components/UserList";
+import { NewUserForm } from "../components/NewUserForm";
 
 export const HomePage = () => {
   const { users, loading } = useSelector((state: RootState) => state.users);
@@ -35,6 +36,8 @@ export const HomePage = () => {
         <h3>Lista de Usuarios</h3>
         <div>
           <UserList users={users} />
+
+          <NewUserForm />
         </div>
       </div>
     </>

@@ -3,6 +3,7 @@ import type { RootState } from "../store/store";
 import { useEffect } from "react";
 import { fetchUsers } from "../api/userApi";
 import { setInitialUsers, setLoading } from "../store/userSlice";
+import { UserList } from "../components/UserList";
 
 export const HomePage = () => {
   const { users, loading } = useSelector((state: RootState) => state.users);
@@ -31,19 +32,10 @@ export const HomePage = () => {
   return (
     <>
       <div>
-        <h2>Lista de Usuarios</h2>
-
-        <ul>
-          {/* Listado de Usuarios */}
-          {users.map((user) => (
-            <li key={user.id}>
-              <p>
-                {user.name.first} {user.name.last}
-              </p>
-              <img src={user.picture.medium} />
-            </li>
-          ))}
-        </ul>
+        <h3>Lista de Usuarios</h3>
+        <div>
+          <UserList users={users} />
+        </div>
       </div>
     </>
   );

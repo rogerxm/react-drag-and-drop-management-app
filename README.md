@@ -1,73 +1,50 @@
-# React + TypeScript + Vite
+# Prueba Técnica - Desarrollador Frontend (React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+##### Este es un proyecto que implementa una interfaz de drag and drop para gestionar listas de usuarios.
 
-Currently, two official plugins are available:
+#### Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+https://react-drag-and-drop-management-app.vercel.app/
 
-## React Compiler
+### Características Principales
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Listas de Usuarios**: Muestra dos listas: "Usuarios Generales" y "Usuarios Seleccionados".
+- **Drag & Drop**: Permite mover usuarios entre las dos listas usando dnd-kit.
+- **Navegación**: Usa react-router para mostrar una vista de detalle (/users/:id) y un formulario de creación (/users/new).
+- **Gestión de Estado**: Maneja el estado global de las listas de usuarios usando Redux Toolkit.
+- **¿Por qué elegí Redux?**
 
-## Expanding the ESLint configuration
+  La app necesita cargar datos de una API, mover usuarios entre dos listas y añadir nuevos. Redux Toolkit me da un lugar centralizado y muy organizado para manejar toda esa lógica.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Persistencia**: Guarda el estado de Redux en localStorage para persistir los cambios si se recarga la página.
+- **Diseño Responsivo**: La interfaz se adapta a dispositivos móviles.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Stack utilizado
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- React
+- TypeScript
+- Vite
+- Redux Toolkit (para manejo de estado)
+- React Router (para navegación)
+- @dnd-kit (para el drag and drop)
+- Tailwind CSS (para estilos)
+- Toaser (para notificaciones)
+- Axios (para el consumo de la API)
+- Vercel (para el deployment)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Instrucciones para ejecutar el proyecto:
+
+1. Clonar el Repositorio
+   Link del repo: https://github.com/rogerxm/react-drag-and-drop-management-app
+
+2. Instalar Dependencias
+
+```
+   npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+3. Ejecutar el Proyecto
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+   npm run dev
 ```

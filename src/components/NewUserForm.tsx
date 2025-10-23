@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import type { User } from "../types/user";
 import { generateUniqueId } from "../utils/uuidGenerator";
 import { addNewUser } from "../store/userSlice";
+import { useNavigate } from "react-router";
 
 const initialFormState = {
   name: "",
@@ -22,7 +23,9 @@ const initialFormState = {
 export const NewUserForm = () => {
   const [formData, setFormData] = useState(initialFormState);
   const [error, setError] = useState<string | null>(null);
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -102,99 +105,243 @@ export const NewUserForm = () => {
 
     dispatch(addNewUser(newUser));
 
+    navigate("/");
     setFormData(initialFormState);
   };
 
+  const inputStyle =
+    "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 transition-shadow";
+
   return (
-    <form onSubmit={handleSubmit}>
-      {error && <p>{error}</p>}
-
-      <div>
-        <input
-          onChange={handleChange}
-          type="text"
-          name="name"
-          placeholder="Nombre Completo *"
-          value={formData.name}
-        />
-        <input
-          onChange={handleChange}
-          type="email"
-          name="email"
-          placeholder="Correo Electrónico *"
-          value={formData.email}
-        />
-        <input
-          onChange={handleChange}
-          type="text"
-          name="phone"
-          placeholder="Número de teléfono *"
-          value={formData.phone}
-        />
-        <input
-          onChange={handleChange}
-          type="text"
-          name="nationality"
-          placeholder="Nacionalidad *"
-          value={formData.nationality}
-        />
-        <select name="gender" value={formData.gender} onChange={handleChange}>
-          <option value="male">Masculino</option>
-          <option value="female">Femenino</option>
-          <option value="other">Otro</option>
-        </select>
-        <input
-          onChange={handleChange}
-          type="text"
-          name="street"
-          placeholder="Calle *"
-          value={formData.street}
-        />
-        <input
-          onChange={handleChange}
-          type="text"
-          name="streetNumber"
-          placeholder="Número *"
-          value={formData.streetNumber}
-        />
-        <input
-          onChange={handleChange}
-          type="text"
-          name="city"
-          placeholder="Ciudad *"
-          value={formData.city}
-        />
-        <input
-          onChange={handleChange}
-          type="text"
-          name="state"
-          placeholder="Estado *"
-          value={formData.state}
-        />
-        <input
-          onChange={handleChange}
-          type="text"
-          name="country"
-          placeholder="País *"
-          value={formData.country}
-        />
-        <input
-          onChange={handleChange}
-          type="text"
-          name="postcode"
-          placeholder="Código Postal *"
-          value={formData.postcode}
-        />
-        <input
-          onChange={handleChange}
-          type="url"
-          name="imageUrl"
-          placeholder="URL Imagen"
-          value={formData.imageUrl}
-        />
+    <div className="p-8 bg-gray-50 min-h-screen flex flex-col items-center justify-center">
+      <div className="mb-6">
+        <button
+          className="w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
+          onClick={() => navigate("/")}
+        >
+          Volver al Listado
+        </button>
       </div>
+      <form
+        onSubmit={handleSubmit}
+        className="p-8 bg-white rounded-xl shadow-lg"
+      >
+        <h3 className="text-2xl font-semibold text-gray-700 text-center">
+          Registrar Nuevo Usuario
+        </h3>
 
-      <button type="submit">Registrar Nuevo Usuario</button>
-    </form>
+        {error && (
+          <div className="p-4 mt-2 bg-red-100 border border-red-300 text-red-700 rounded-lg">
+            <p>{error}</p>
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-4">
+          <div>
+            <label
+              htmlFor="name"
+              className="text-sm font-medium text-gray-600 mb-1"
+            >
+              Nombre Completo *
+            </label>
+            <input
+              className={inputStyle}
+              onChange={handleChange}
+              type="text"
+              name="name"
+              value={formData.name}
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="email"
+              className="text-sm font-medium text-gray-600 mb-1"
+            >
+              Correo Electrónico *
+            </label>
+            <input
+              className={inputStyle}
+              onChange={handleChange}
+              type="email"
+              name="email"
+              value={formData.email}
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="phone"
+              className="text-sm font-medium text-gray-600 mb-1"
+            >
+              Número de teléfono *
+            </label>
+            <input
+              className={inputStyle}
+              onChange={handleChange}
+              type="text"
+              name="phone"
+              value={formData.phone}
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="nationality"
+              className="block text-sm font-medium text-gray-600 mb-1"
+            >
+              Nacionalidad *
+            </label>
+            <input
+              className={inputStyle}
+              onChange={handleChange}
+              type="text"
+              name="nationality"
+              value={formData.nationality}
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="gender"
+              className="block text-sm font-medium text-gray-600 mb-1"
+            >
+              Género
+            </label>
+            <select
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              className={inputStyle}
+            >
+              <option value="male">Masculino</option>
+              <option value="female">Femenino</option>
+              <option value="other">Otro</option>
+            </select>
+          </div>
+
+          <div>
+            <label
+              htmlFor="street"
+              className="block text-sm font-medium text-gray-600 mb-1"
+            >
+              Calle *
+            </label>
+            <input
+              className={inputStyle}
+              onChange={handleChange}
+              type="text"
+              name="street"
+              value={formData.street}
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="streetNumber"
+              className="block text-sm font-medium text-gray-600 mb-1"
+            >
+              Número *
+            </label>
+            <input
+              className={inputStyle}
+              onChange={handleChange}
+              type="text"
+              name="streetNumber"
+              value={formData.streetNumber}
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="city"
+              className="block text-sm font-medium text-gray-600 mb-1"
+            >
+              Ciudad *
+            </label>
+            <input
+              className={inputStyle}
+              onChange={handleChange}
+              type="text"
+              name="city"
+              value={formData.city}
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="state"
+              className="block text-sm font-medium text-gray-600 mb-1"
+            >
+              Estado *
+            </label>
+            <input
+              className={inputStyle}
+              onChange={handleChange}
+              type="text"
+              name="state"
+              value={formData.state}
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="country"
+              className="block text-sm font-medium text-gray-600 mb-1"
+            >
+              País *
+            </label>
+            <input
+              className={inputStyle}
+              onChange={handleChange}
+              type="text"
+              name="country"
+              value={formData.country}
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="postcode"
+              className="block text-sm font-medium text-gray-600 mb-1"
+            >
+              Código Postal *
+            </label>
+            <input
+              className={inputStyle}
+              onChange={handleChange}
+              type="text"
+              name="postcode"
+              value={formData.postcode}
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="imageUrl"
+              className="block text-sm font-medium text-gray-600 mb-1"
+            >
+              Imagen *
+            </label>
+            <input
+              className={inputStyle}
+              onChange={handleChange}
+              type="url"
+              name="imageUrl"
+              value={formData.imageUrl}
+            />
+          </div>
+        </div>
+
+        <div className="pt-4">
+          <button
+            type="submit"
+            className="w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700"
+          >
+            Registrar Nuevo Usuario
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };

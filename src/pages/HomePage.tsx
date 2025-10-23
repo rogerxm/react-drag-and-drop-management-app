@@ -32,7 +32,19 @@ export const HomePage = () => {
   const dispatch = useDispatch();
   const [activeUser, setActiveUser] = useState<User | null>(null);
 
-  const sensors = useSensors(useSensor(TouchSensor), useSensor(PointerSensor));
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 10,
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250,
+        tolerance: 5,
+      },
+    })
+  );
 
   useEffect(() => {
     const fetchInitialData = async () => {

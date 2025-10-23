@@ -12,6 +12,7 @@ import {
 import {
   DndContext,
   DragOverlay,
+  PointerSensor,
   TouchSensor,
   useSensor,
   useSensors,
@@ -31,7 +32,7 @@ export const HomePage = () => {
   const dispatch = useDispatch();
   const [activeUser, setActiveUser] = useState<User | null>(null);
 
-  const sensors = useSensors(useSensor(TouchSensor));
+  const sensors = useSensors(useSensor(TouchSensor), useSensor(PointerSensor));
 
   useEffect(() => {
     const fetchInitialData = async () => {

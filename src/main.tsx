@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import { HomePage } from "./pages/HomePage.tsx";
 import { UserDetailsPage } from "./pages/UserDetailsPage.tsx";
 import "./App.css";
+import { NewUserForm } from "./components/NewUserForm.tsx";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: "/users/:id",
     element: <UserDetailsPage />,
+  },
+  {
+    path: "/users/new",
+    element: <NewUserForm />,
   },
 ]);
 

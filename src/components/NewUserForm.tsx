@@ -4,6 +4,7 @@ import type { User } from "../types/user";
 import { generateUniqueId } from "../utils/uuidGenerator";
 import { addNewUser } from "../store/userSlice";
 import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 
 const initialFormState = {
   name: "",
@@ -23,6 +24,7 @@ const initialFormState = {
 export const NewUserForm = () => {
   const [formData, setFormData] = useState(initialFormState);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -53,21 +55,23 @@ export const NewUserForm = () => {
       !formData.postcode.trim()
     ) {
       setError("Complete todos los campos obligatorios.");
+      setIsLoading(false);
       return false;
     }
 
     if (!formData.email.includes("@") || !formData.email.includes(".")) {
       setError("Ingrese un correo electrónico válido.");
+      setIsLoading(false);
       return false;
     }
 
+    setIsLoading(false);
     return true;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    console.log(formData);
+    setIsLoading(true);
 
     if (!validate()) return;
 
@@ -105,6 +109,8 @@ export const NewUserForm = () => {
 
     dispatch(addNewUser(newUser));
 
+    setIsLoading(false);
+    toast.success("Usuario registrado con éxito!");
     navigate("/");
     setFormData(initialFormState);
   };
@@ -336,9 +342,10 @@ export const NewUserForm = () => {
         <div className="pt-4">
           <button
             type="submit"
-            className="w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700"
+            className="w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={isLoading}
           >
-            Registrar Nuevo Usuario
+            {isLoading ? "Registrando..." : "Registrar Nuevo Usuario"}
           </button>
         </div>
       </form>

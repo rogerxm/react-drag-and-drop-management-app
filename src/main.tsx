@@ -7,6 +7,7 @@ import { HomePage } from "./pages/HomePage.tsx";
 import { UserDetailsPage } from "./pages/UserDetailsPage.tsx";
 import "./App.css";
 import { NewUserForm } from "./components/NewUserForm.tsx";
+import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
       <RouterProvider router={router} />
+      <Toaster position="top-center" />
     </Provider>
   </StrictMode>
 );

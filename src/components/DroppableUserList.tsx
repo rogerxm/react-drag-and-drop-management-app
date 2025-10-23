@@ -15,24 +15,27 @@ export const DroppableUserList = ({
 }: DroppableUserListProps) => {
   const { isOver, setNodeRef } = useDroppable({ id });
 
+  const listStyle = `flex-grow overflow-y-auto p-4 rounded-b-xl transition-colors ${
+    isOver ? "bg-blue-100" : "bg-white"
+  }`;
+
   return (
-    <div
-      className="bg-white rounded-xl shadow-lg flex flex-col"
-      ref={setNodeRef}
-    >
+    <div className="bg-white rounded-xl shadow-lg flex flex-col">
       <div className="p-6 border-b border-gray-200">
         <h2 className="text-2xl font-semibold text-gray-700">{title}</h2>
       </div>
 
-      <UserList users={users} containerId={id} />
-
-      {users.length === 0 && (
-        <div>
-          <p className="text-center text-lg font-semibold">
-            {isOver ? "Suelta aquí" : "Sin usuarios seleccionados"}
-          </p>
-        </div>
-      )}
+      <div className={listStyle} ref={setNodeRef}>
+        {users.length > 0 ? (
+          <UserList users={users} containerId={id} />
+        ) : (
+          <div>
+            <p className="text-center text-lg font-semibold">
+              {isOver ? "Suelta aquí" : "Sin usuarios seleccionados"}
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

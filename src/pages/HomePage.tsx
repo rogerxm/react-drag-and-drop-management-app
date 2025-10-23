@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchUsers } from "../api/userApi";
 import {
   moveUserToAvailable,
@@ -9,16 +9,24 @@ import {
   setLoading,
 } from "../store/userSlice";
 
-import { DndContext, type DragEndEvent } from "@dnd-kit/core";
+import {
+  DndContext,
+  DragOverlay,
+  type DragEndEvent,
+  type DragStartEvent,
+} from "@dnd-kit/core";
 import { DroppableUserList } from "../components/DroppableUserList";
 import { Link } from "react-router";
 import { BounceLoader } from "react-spinners";
+import { DraggableUserCard } from "../components/DraggableUserCard";
+import type { User } from "../types/user";
 
 export const HomePage = () => {
   const { generalUsers, selectedUsers, loading } = useSelector(
     (state: RootState) => state.users
   );
   const dispatch = useDispatch();
+  const [activeUser, setActiveUser] = useState<User | null>(null);
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -49,6 +57,13 @@ export const HomePage = () => {
     );
   }
 
+  const handleDragStart = (event: DragStartEvent) => {
+    const user = event.active.data.current?.user as User;
+    if (user) {
+      setActiveUser(user);
+    }
+  };
+
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
@@ -68,7 +83,7 @@ export const HomePage = () => {
   };
 
   return (
-    <DndContext onDragEnd={handleDragEnd}>
+    <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className="container mx-auto max-w-6xl p-8">
         <div className="mb-4 text-center">
           <h1 className="text-4xl font-bold text-gray-800">Panel Operativo</h1>
@@ -100,6 +115,12 @@ export const HomePage = () => {
           />
         </div>
       </div>
+
+      <DragOverlay>
+        {activeUser ? (
+          <DraggableUserCard user={activeUser} containerId="" />
+        ) : null}
+      </DragOverlay>
     </DndContext>
   );
 };

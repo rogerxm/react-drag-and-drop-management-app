@@ -2,6 +2,25 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import type { RootState } from "../store/store";
 
+const nationalities = [
+  { code: "MX", name: "México", flag: "🇲🇽" },
+  { code: "US", name: "USA", flag: "🇺🇸" },
+  { code: "CA", name: "Canadá", flag: "🇨🇦" },
+  { code: "BR", name: "Brasil", flag: "🇧🇷" },
+  { code: "AR", name: "Argentina", flag: "🇦🇷" },
+  { code: "CO", name: "Colombia", flag: "🇨🇴" },
+  { code: "ES", name: "España", flag: "🇪🇸" },
+  { code: "FR", name: "Francia", flag: "🇫🇷" },
+  { code: "DE", name: "Alemania", flag: "🇩🇪" },
+  { code: "GB", name: "Reino Unido", flag: "🇬🇧" },
+  { code: "IT", name: "Italia", flag: "🇮🇹" },
+  { code: "JP", name: "Japón", flag: "🇯🇵" },
+  { code: "CN", name: "China", flag: "🇨🇳" },
+  { code: "IN", name: "India", flag: "🇮🇳" },
+  { code: "AU", name: "Australia", flag: "🇦🇺" },
+  { code: "NL", name: "Netherlands", flag: "🇳🇱" },
+];
+
 export const UserDetailsPage = () => {
   // Obtener el ID del usuario de la URL
   const { id } = useParams<{ id: string }>();
@@ -40,6 +59,11 @@ export const UserDetailsPage = () => {
   }
 
   console.log(user);
+
+  const nationalityInfo = nationalities.find((nat) => nat.code === user.nat);
+  const nationalityDisplay = nationalityInfo
+    ? `${nationalityInfo.flag} ${user.nat}`
+    : user.nat;
 
   // Renderizar toda la información disponible
   const fullName = `${user.name?.title || ""}. ${user.name?.first || ""} ${
@@ -97,7 +121,7 @@ export const UserDetailsPage = () => {
                 <p className="text-sm font-medium text-gray-500">
                   Nacionalidad:{" "}
                   <span className="text-base font-medium text-gray-800 sm:text-right">
-                    {user.nat}
+                    {nationalityDisplay}
                   </span>
                 </p>
                 <p className="text-sm font-medium text-gray-500">

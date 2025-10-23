@@ -21,6 +21,25 @@ const initialFormState = {
   imageUrl: "",
 };
 
+const nationalities = [
+  { code: "MX", name: "México", flag: "🇲🇽" },
+  { code: "US", name: "USA", flag: "🇺🇸" },
+  { code: "CA", name: "Canadá", flag: "🇨🇦" },
+  { code: "BR", name: "Brasil", flag: "🇧🇷" },
+  { code: "AR", name: "Argentina", flag: "🇦🇷" },
+  { code: "CO", name: "Colombia", flag: "🇨🇴" },
+  { code: "ES", name: "España", flag: "🇪🇸" },
+  { code: "FR", name: "Francia", flag: "🇫🇷" },
+  { code: "DE", name: "Alemania", flag: "🇩🇪" },
+  { code: "GB", name: "Reino Unido", flag: "🇬🇧" },
+  { code: "IT", name: "Italia", flag: "🇮🇹" },
+  { code: "JP", name: "Japón", flag: "🇯🇵" },
+  { code: "CN", name: "China", flag: "🇨🇳" },
+  { code: "IN", name: "India", flag: "🇮🇳" },
+  { code: "AU", name: "Australia", flag: "🇦🇺" },
+  { code: "NL", name: "Netherlands", flag: "🇳🇱" },
+];
+
 export const NewUserForm = () => {
   const [formData, setFormData] = useState(initialFormState);
   const [error, setError] = useState<string | null>(null);
@@ -198,13 +217,22 @@ export const NewUserForm = () => {
             >
               Nacionalidad *
             </label>
-            <input
-              className={inputStyle}
-              onChange={handleChange}
-              type="text"
+            <select
+              id="nationality"
               name="nationality"
               value={formData.nationality}
-            />
+              onChange={handleChange}
+              className={inputStyle}
+            >
+              <option value="" disabled>
+                Selecciona un país
+              </option>
+              {nationalities.map((nat) => (
+                <option key={nat.code} value={nat.code}>
+                  {nat.flag} {nat.name} ({nat.code})
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>

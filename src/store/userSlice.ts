@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { User } from "../types/user";
 
-interface UserState {
+export interface UserState {
   generalUsers: User[];
   selectedUsers: User[];
   loading: boolean;

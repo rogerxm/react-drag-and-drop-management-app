@@ -15,7 +15,7 @@ export const DroppableUserList = ({
 }: DroppableUserListProps) => {
   const { isOver, setNodeRef } = useDroppable({ id });
 
-  const listStyle = `flex-grow overflow-y-auto p-4 rounded-b-xl transition-colors ${
+  const listStyle = `flex-grow overflow-y-auto overflow-x-hidden p-4 rounded-b-xl transition-colors ${
     isOver ? "bg-blue-100" : "bg-white"
   }`;
 

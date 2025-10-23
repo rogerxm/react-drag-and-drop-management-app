@@ -8,7 +8,7 @@ interface UserListProps {
 
 export const UserList = ({ users, containerId }: UserListProps) => {
   return (
-    <div className="p-6 ">
+    <div className="p-2 md:p-6">
       {/* Mapear y renderizar las UserCard */}
       {users.map((user) => (
         <DraggableUserCard

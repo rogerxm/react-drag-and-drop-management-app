@@ -22,11 +22,11 @@ export const DraggableUserCard = ({
 
   return (
     <div
-      className="p-4 my-4 bg-white rounded-lg shadow border border-gray-200 flex gap-2 items-center transition-shadow hover:shadow-lg"
+      className="p-4 my-4 bg-white rounded-lg shadow border border-gray-200 flex gap-2 items-center transition-shadow hover:shadow-lg overflow-auto"
       ref={setNodeRef}
     >
       <img
-        className="w-20 h-20 rounded-full"
+        className="w-12 h-12 md:w-20 md:h-10 rounded-full"
         src={profileImage}
         alt={fullName}
         {...listeners}
@@ -38,8 +38,10 @@ export const DraggableUserCard = ({
         to={`/users/${user.id}`}
       >
         <div>
-          <h4 className="font-semibold text-gray-800">{fullName}</h4>
-          <p className="text-sm text-gray-500">{userEmail}</p>
+          <h4 className="font-semibold text-gray-800 text-sm md:text-base">
+            {fullName}
+          </h4>
+          <p className="text-xs md:text-sm text-gray-500">{userEmail}</p>
         </div>
       </Link>
     </div>

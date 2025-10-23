@@ -101,7 +101,7 @@ export const HomePage = () => {
           </Link>
         </div>
 
-        <div className="flex gap-5 justify-center">
+        <div className="flex flex-col lg:flex-row gap-5 justify-center">
           <DroppableUserList
             id="general-list"
             title="Lista de general de usuarios"

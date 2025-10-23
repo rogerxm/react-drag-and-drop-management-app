@@ -1,16 +1,21 @@
 import type { User } from "../types/user";
-import { UserCard } from "./UserCard";
+import { DraggableUserCard } from "./DraggableUserCard";
 
 interface UserListProps {
   users: User[];
+  containerId: string;
 }
 
-export const UserList = ({ users }: UserListProps) => {
+export const UserList = ({ users, containerId }: UserListProps) => {
   return (
     <div>
       {/* Mapear y renderizar las UserCard */}
       {users.map((user) => (
-        <UserCard key={user.id} user={user} />
+        <DraggableUserCard
+          key={user.id}
+          user={user}
+          containerId={containerId}
+        />
       ))}
     </div>
   );

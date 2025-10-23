@@ -2,14 +2,14 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { User } from "../types/user";
 
 interface UserState {
-  availableUsers: User[];
+  generalUsers: User[];
   selectedUsers: User[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: UserState = {
-  availableUsers: [],
+  generalUsers: [],
   selectedUsers: [],
   loading: false,
   error: null,
@@ -26,20 +26,20 @@ export const userSlice = createSlice({
 
     // Guarda los usuarios de la API
     setInitialUsers: (state, action: PayloadAction<User[]>) => {
-      state.availableUsers = action.payload;
+      state.generalUsers = action.payload;
       state.loading = false;
     },
 
     // Agrega el nuevo usuario
     addNewUser: (state, action: PayloadAction<User>) => {
-      state.availableUsers.unshift(action.payload);
+      state.generalUsers.unshift(action.payload);
     },
 
     // Mover usuario a la lista de seleccionados
     moveUserToSelected: (state, action: PayloadAction<User>) => {
       const userToMove = action.payload;
-      // Quitar de availableUsers
-      state.availableUsers = state.availableUsers.filter(
+      // Quitar de generalUsers
+      state.generalUsers = state.generalUsers.filter(
         (user) => user.id !== userToMove.id
       );
 
@@ -56,9 +56,9 @@ export const userSlice = createSlice({
       state.selectedUsers = state.selectedUsers.filter(
         (user) => user.id !== userToMove.id
       );
-      // Añadir a availableUsers
-      if (!state.availableUsers.find((user) => user.id === userToMove.id)) {
-        state.availableUsers.push(userToMove);
+      // Añadir a generalUsers
+      if (!state.generalUsers.find((user) => user.id === userToMove.id)) {
+        state.generalUsers.push(userToMove);
       }
     },
   },

@@ -9,7 +9,7 @@ export const UserDetailsPage = () => {
 
   // Buscar al usuario en Redux
   const allUsers = useSelector((state: RootState) => [
-    ...state.users.availableUsers,
+    ...state.users.generalUsers,
     ...state.users.selectedUsers,
   ]);
 

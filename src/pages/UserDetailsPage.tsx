@@ -7,6 +7,9 @@ export const UserDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
+  const buttonStyle =
+    "px-5 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700";
+
   // Buscar al usuario en Redux
   const allUsers = useSelector((state: RootState) => [
     ...state.users.generalUsers,
@@ -19,10 +22,19 @@ export const UserDetailsPage = () => {
   // Mensaje si no hay usuario
   if (!user) {
     return (
-      <div>
-        <h2>Usuario no encontrado</h2>
-        <p>El ID `{id}` no corresponde a ningún usuario</p>
-        <button onClick={() => navigate("/")}>Volver al inicio</button>
+      <div className="p-8 bg-gray-50 min-h-screen flex items-center justify-center">
+        <div className="max-w-md w-full text-center bg-white rounded-xl shadow-lg p-10">
+          <h2 className="text-3xl font-bold text-red-600 mb-4">
+            Usuario no encontrado
+          </h2>
+          <p className="text-lg text-gray-700 mb-8">
+            El ID <span className=" text-red-500">{id}</span> no corresponde a
+            ningún usuario.
+          </p>
+          <button onClick={() => navigate("/")} className={buttonStyle}>
+            Volver al inicio
+          </button>
+        </div>
       </div>
     );
   }
@@ -38,28 +50,95 @@ export const UserDetailsPage = () => {
   const profilePicture = user.picture?.large || "";
 
   return (
-    <div>
-      <button onClick={() => navigate("/")}>Volver al Listado</button>
+    <div className="p-8 bg-gray-50 min-h-screen">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-6">
+          <button className={buttonStyle} onClick={() => navigate("/")}>
+            Volver al Listado
+          </button>
+        </div>
 
-      <div>
-        <img src={profilePicture} alt={fullName} />
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="flex flex-col md:flex-row">
+            <div className="md:w-1/3 p-8 flex flex-col items-center justify-start bg-gray-50">
+              <img
+                className="w-40 h-40 rounded-full shadow-lg object-cover"
+                src={profilePicture}
+                alt={fullName}
+              />
+              <h1 className="text-2xl font-bold text-gray-900 mt-6 text-center">
+                {fullName}
+              </h1>
+            </div>
 
-        <div>
-          <h1>{fullName}</h1>
+            <div className="md:w-2/3 p-8 space-y-6">
+              <section>
+                <h3 className="text-xl font-semibold text-gray-800 border-b pb-2 mb-4">
+                  Datos de Contacto
+                </h3>
+                <p className="text-sm font-medium text-gray-500">
+                  Correo Electrónico:{" "}
+                  <span className="text-base font-medium text-gray-800 sm:text-right">
+                    {user.email}
+                  </span>
+                </p>
+                <p className="text-sm font-medium text-gray-500">
+                  Teléfono:
+                  <span className="text-base font-medium text-gray-800 sm:text-right">
+                    {user.phone}
+                  </span>
+                </p>
+              </section>
 
-          <h3>Datos de Contacto</h3>
-          <p>Correo Electrónico: {user.email}</p>
-          <p>Teléfono: {user.phone}</p>
+              <section>
+                <h3 className="text-xl font-semibold text-gray-800 border-b pb-2 mb-4">
+                  Información Personal y Ubicación
+                </h3>
+                <p className="text-sm font-medium text-gray-500">
+                  Nacionalidad:{" "}
+                  <span className="text-base font-medium text-gray-800 sm:text-right">
+                    {user.nat}
+                  </span>
+                </p>
+                <p className="text-sm font-medium text-gray-500">
+                  Género:{" "}
+                  <span className="text-base font-medium text-gray-800 sm:text-right">
+                    {user.gender}
+                  </span>
+                </p>
+                <p className="text-sm font-medium text-gray-500">
+                  Dirección Completa:{" "}
+                  <span className="text-base font-medium text-gray-800 sm:text-right">
+                    {location}
+                  </span>
+                </p>
+                <p className="text-sm font-medium text-gray-500">
+                  ID Único:{" "}
+                  <span className="text-base font-medium text-gray-800 sm:text-right">
+                    {user.id}
+                  </span>
+                </p>
+              </section>
 
-          <h3>Información Personal y Ubicación</h3>
-          <p>Nacionalidad: {user.nat}</p>
-          <p>Género: {user.gender}</p>
-          <p>Dirección Completa: {location}</p>
-          <p>ID Único: {user.id}</p>
-
-          <h3>Datos de Registro</h3>
-          <p>Fecha de Registro: {registrationDate}</p>
-          <p>Edad: {user.registered?.age} años</p>
+              <section>
+                <h3 className="text-xl font-semibold text-gray-800 border-b pb-2 mb-4">
+                  Datos de Registro
+                </h3>
+                <p className="text-sm font-medium text-gray-500">
+                  Fecha de Registro:{" "}
+                  <span className="text-base font-medium text-gray-800 sm:text-right">
+                    {registrationDate}
+                  </span>
+                </p>
+                <p className="text-sm font-medium text-gray-500">
+                  Edad:{" "}
+                  <span className="text-base font-medium text-gray-800 sm:text-right">
+                    {user.registered.age} años
+                  </span>
+                </p>
+              </section>
+            </div>
+          </div>
         </div>
       </div>
     </div>

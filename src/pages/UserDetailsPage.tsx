@@ -8,7 +8,10 @@ export const UserDetailsPage = () => {
   const navigate = useNavigate();
 
   // Buscar al usuario en Redux
-  const allUsers = useSelector((state: RootState) => [...state.users.users]);
+  const allUsers = useSelector((state: RootState) => [
+    ...state.users.availableUsers,
+    ...state.users.selectedUsers,
+  ]);
 
   // Encontrar el usuario por el ID
   const user = allUsers.find((u) => u.id === id);

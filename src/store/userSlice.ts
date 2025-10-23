@@ -2,13 +2,15 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { User } from "../types/user";
 
 interface UserState {
-  users: User[];
+  availableUsers: User[];
+  selectedUsers: User[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: UserState = {
-  users: [],
+  availableUsers: [],
+  selectedUsers: [],
   loading: false,
   error: null,
 };
@@ -24,15 +26,49 @@ export const userSlice = createSlice({
 
     // Guarda los usuarios de la API
     setInitialUsers: (state, action: PayloadAction<User[]>) => {
-      state.users = action.payload;
+      state.availableUsers = action.payload;
       state.loading = false;
     },
 
+    // Agrega el nuevo usuario
     addNewUser: (state, action: PayloadAction<User>) => {
-      state.users.unshift(action.payload);
+      state.availableUsers.unshift(action.payload);
+    },
+
+    // Mover usuario a la lista de seleccionados
+    moveUserToSelected: (state, action: PayloadAction<User>) => {
+      const userToMove = action.payload;
+      // Quitar de availableUsers
+      state.availableUsers = state.availableUsers.filter(
+        (user) => user.id !== userToMove.id
+      );
+
+      // Añadir a selectedUsers
+      if (!state.selectedUsers.find((user) => user.id === userToMove.id)) {
+        state.selectedUsers.push(userToMove);
+      }
+    },
+
+    // Mover usuario a la lista general
+    moveUserToAvailable: (state, action: PayloadAction<User>) => {
+      const userToMove = action.payload;
+      // Quitar de selectedUsers
+      state.selectedUsers = state.selectedUsers.filter(
+        (user) => user.id !== userToMove.id
+      );
+      // Añadir a availableUsers
+      if (!state.availableUsers.find((user) => user.id === userToMove.id)) {
+        state.availableUsers.push(userToMove);
+      }
     },
   },
 });
 
-export const { setLoading, setInitialUsers, addNewUser } = userSlice.actions;
+export const {
+  setLoading,
+  setInitialUsers,
+  addNewUser,
+  moveUserToAvailable,
+  moveUserToSelected,
+} = userSlice.actions;
 export default userSlice.reducer;

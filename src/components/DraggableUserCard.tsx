@@ -22,7 +22,7 @@ export const DraggableUserCard = ({
 
   return (
     <div
-      className="p-4 my-4 bg-white rounded-lg shadow border border-gray-200 flex gap-2 items-center transition-shadow hover:shadow-lg overflow-auto"
+      className="p-4 my-4 bg-white rounded-lg shadow border border-gray-200 flex gap-2 items-center transition-shadow hover:shadow-lg overflow-auto touch-none"
       ref={setNodeRef}
     >
       <img

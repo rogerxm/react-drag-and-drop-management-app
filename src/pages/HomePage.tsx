@@ -12,6 +12,9 @@ import {
 import {
   DndContext,
   DragOverlay,
+  TouchSensor,
+  useSensor,
+  useSensors,
   type DragEndEvent,
   type DragStartEvent,
 } from "@dnd-kit/core";
@@ -27,6 +30,8 @@ export const HomePage = () => {
   );
   const dispatch = useDispatch();
   const [activeUser, setActiveUser] = useState<User | null>(null);
+
+  const sensors = useSensors(useSensor(TouchSensor));
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -83,7 +88,11 @@ export const HomePage = () => {
   };
 
   return (
-    <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+    <DndContext
+      sensors={sensors}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+    >
       <div className="container mx-auto max-w-6xl p-8">
         <div className="mb-4 text-center">
           <h1 className="text-4xl font-bold text-gray-800">Panel Operativo</h1>

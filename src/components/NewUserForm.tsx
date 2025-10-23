@@ -94,6 +94,14 @@ export const NewUserForm = () => {
 
     if (!validate()) return;
 
+    const placeholderUrl =
+      "https://placehold.co/128x128/E0E7FF/4F46E5?text=User";
+
+    // Si no hay url se asigna una predeterminada
+    const finalImageUrl = formData.imageUrl.trim()
+      ? formData.imageUrl.trim()
+      : placeholderUrl;
+
     const newUser: User = {
       id: generateUniqueId(),
       email: formData.email,
@@ -116,9 +124,9 @@ export const NewUserForm = () => {
         postcode: +formData.postcode,
       },
       picture: {
-        large: formData.imageUrl,
-        medium: formData.imageUrl,
-        thumbnail: formData.imageUrl,
+        large: finalImageUrl,
+        medium: finalImageUrl,
+        thumbnail: finalImageUrl,
       },
       registered: {
         date: new Date().toISOString(),
